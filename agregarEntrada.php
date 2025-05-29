@@ -35,7 +35,6 @@
         <select name="idCategoria" id="idCategoria"
                 class="w-full p-3 rounded bg-neutral-800 text-white focus:outline-none focus:ring-2 focus:ring-amber-500">
           <option value="">Seleccioná una categoría</option>
-          <!-- Aquí van las opciones PHP -->
         </select>
       </div>
 
