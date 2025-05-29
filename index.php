@@ -1,6 +1,4 @@
-<?php
-include_once('header.php');
-?>
+<?php include_once('header.php'); ?>
 <main id="main">
     <section id="banner" class="h-screen bg-[url(img/banner.webp)] bg-center bg-no-repeat bg-cover flex justify-center items-center">
         <div class="bg-black/80 text-white text-center max-w-[550px] p-4">
@@ -15,30 +13,38 @@ include_once('header.php');
             <p class="text-white text-xl my-8">Aqui publicare todas las ultimas entradas publicadas semanalmente</p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 text-white my-5">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 text-white my-5">
             <?php 
             require_once("conexion.php");
-            $sentencia = $conexion->query("SELECT * FROM entradastb ORDER BY fechaEntrada DESC LIMIT 6");
+            $sentencia = $conexion->query("SELECT * FROM entradastb, categoriastb WHERE entradastb.idCategoria = categoriastb.idCategoria ORDER BY fechaEntrada DESC LIMIT 3");
 
             $entradas = $sentencia->fetchAll(PDO::FETCH_ASSOC);
 
             foreach ($entradas as $fila) {
             ?>
-            <div>
-                <img src="img/portadas/<?= $fila['portadaEntrada']; ?>" class="w-full h-64 object-cover" alt="">
-                <div class="flex justify-between items-center">
-                    <h3 class="text-amber-600 text-xl"><?= $fila['tituloEntrada']; ?></h3>
-                    <h4><?= date('d/m/Y',strtotime($fila['fechaEntrada']));?></h4>
+            <div class="bg-neutral-900 rounded overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
+                <img src="img/portadas/<?= $fila['portadaEntrada']; ?>" class="w-full h-64 object-cover" alt="Portada">
+                <div class="p-4">
+                    <div class="flex justify-between items-center mb-2">
+                        <h3 class="text-amber-500 text-xl font-bold"><?= $fila['tituloEntrada']; ?></h3>
+                        <h4 class="text-sm text-gray-400"><?= date('d/m/Y', strtotime($fila['fechaEntrada'])); ?></h4>
+                    </div>
+                    <h4 class="text-lg mb-2 text-gray-300">Categoría: <?= $fila['nombreCategoria']; ?></h4>
+                    <p class="text-gray-200 mb-2"><?= substr($fila['contenidoEntrada'], 0, 150) ?>...</p>
+                    <a href="detalleEntrada.php?idEntrada=<?= $fila['idEntrada']; ?>" class="text-blue-500 hover:text-amber-500 font-semibold">Ver más</a>
                 </div>
-                <p><?= substr($fila['contenidoEntrada'],1,150) ?><a href="detalleEntrada.php?idEntrada=<?= $fila['idEntrada']; ?>" class="text-blue-600 hover:text-amber-500">Ver más</a>
-                <p>
             </div>
             <?php } ?>
         </div>
+            
+        <div class="flex justify-center mt-8">
+            <a href="entradas.php" class="px-6 py-3 bg-amber-500 hover:bg-amber-600 text-black rounded font-semibold transition-colors duration-300">
+                Ver todas las entradas
+            </a>
+        </div>
+
 
     </section>
 </main>
 
-<?php
-include_once('footer.php');
-?>
+<?php include_once('footer.php'); ?>

@@ -6,6 +6,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
    <body class="font-sans bg-[#1f1f1f]">
+    <?php require_once('conexion.php');?>
     <header class="bg-black shadow-lg sticky top-0">
       <div class="max-w-7xl mx-auto p-4 flex justify-between items-center">
 
