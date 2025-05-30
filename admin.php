@@ -20,7 +20,7 @@
           <div class="py-2"><?= $fila['idEntrada']; ?></div>
           <div class="py-2 justify-self-center"><img src="img/portadas/<?= $fila['portadaEntrada']; ?>" class="w-[100px]" alt=""></div>
           <div class="py-2"><?= $fila['tituloEntrada']; ?></div>
-          <div class="py-2"><?= $fila['fechaEntrada']; ?></div>
+          <div class="py-2"><?= $fila['fechEntrada']; ?></div>
           <div class="py-2"><?= $fila['nombreCategoria']; ?></div>
           <div class="p-2 bg-white text-black"><a href="modificarEntrada.php?idEntrada=<?= $fila['idEntrada']; ?>">Modificar entrada</a></div>
           <div class="p-2 bg-red-600 text-black eliminar"><a href="#" onClick="borrado(<?= $fila['idEntrada'] ;?>)">Eliminar entrada</a></div>

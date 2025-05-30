@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Mostrar imagen seleccionada</title>
+</head>
+<body>
+
+<input type="file" id="inputImagen" accept="image/*" />
+<br /><br />
+<img id="preview" src="" alt="Vista previa" style="max-width: 300px; display:none;" />
+
+<script>
+  const inputImagen = document.getElementById('inputImagen');
+  const preview = document.getElementById('preview');
+
+  inputImagen.addEventListener('change', function() {
+    const archivo = this.files[0];
+    if (archivo) {
+      const lector = new FileReader();
+      lector.onload = function(e) {
+        preview.src = e.target.result;
+        preview.style.display = 'block'; // Mostrar la imagen
+      }
+      lector.readAsDataURL(archivo);
+    } else {
+      preview.src = '';
+      preview.style.display = 'none'; // Ocultar la imagen si no hay archivo
+    }
+  });
+</script>
+
+</body>
+</html>

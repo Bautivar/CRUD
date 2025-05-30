@@ -15,7 +15,6 @@
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 text-white my-5">
             <?php 
-            require_once("conexion.php");
             $sentencia = $conexion->query("SELECT * FROM entradastb, categoriastb WHERE entradastb.idCategoria = categoriastb.idCategoria ORDER BY fechaEntrada DESC LIMIT 3");
 
             $entradas = $sentencia->fetchAll(PDO::FETCH_ASSOC);
