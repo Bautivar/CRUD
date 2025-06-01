@@ -1,16 +1,10 @@
 <?php
+    require_once('functions.php');
     $mensaje = "";
-    if (isset($_POST['enviar'])) {
-        $usuario = $_POST['usuario'];
-        $password = $_POST['password'];
 
-        if ($usuario === "admin" && $password === "admin") {
-            header('Location:admin.php');
-        }else{
-            $mensaje = ' <div class="bg-red-300 text-red-700 rounded p-3 my-2">
-                    Usuario o Contraseña incorrecta
-                </div>';
-        }
+    if (isset($_POST['enviar'])) {
+        $recuerdame = isset($_POST['recuerdame']);
+        $mensaje = login($_POST['usuario'],$_POST['password'],$recuerdame);
     }
 ?>
 <?php include_once("header.php") ?>
@@ -26,9 +20,12 @@
             <label for="password" class="m-1">Contraseña</label>
             <input type="password" id="password" name="password" placeholder="Contraseña" class="w-full p-3 mb-6 bg-neutral-800 rounded focus:outline-none focus:ring-2 focus:ring-amber-500" required>
 
+            <label for="recuerdame" class="m-1">Recuerdame</label>
+            <input type="checkbox" class=" mb-6" name="recuerdame" id="recuerdame">
+
             <input type="submit" name="enviar" value="Enviar"
            class="w-full bg-amber-500 hover:bg-amber-600 font-semibold py-3 rounded cursor-pointer transition-colors duration-200">
-           <?= $mensaje ?>
+            <?= $mensaje;?>
         </form>
     </section>
 </main>

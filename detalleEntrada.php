@@ -24,9 +24,7 @@ if (isset($_GET['idEntrada'])) {
             </article>
 
             <div class="mt-8 text-center">
-                <a href="index.php" class="font-semibold px-6 py-2 bg-amber-500 text-black rounded hover:bg-amber-600 transition">
-                    Volver al inicio
-                </a>
+                <a href="index.php" class="font-semibold px-6 py-2 bg-amber-500 text-black rounded hover:bg-amber-600 transition">Volver al inicio</a>
             </div>
         </div>
     </section>

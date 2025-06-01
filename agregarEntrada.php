@@ -1,4 +1,7 @@
 <?php include_once("header.php");
+require_once('functions.php');
+verificarSesion();
+
 $sentencia1 = $conexion->query('SELECT * FROM categoriastb ORDER BY idCategoria ASC');
 $categorias = $sentencia1->fetchAll(PDO::FETCH_ASSOC);
 
@@ -14,7 +17,7 @@ if (isset($_POST['enviar'])) {
   $rutaTemporal = $imagen['tmp_name'];
   move_uploaded_file($rutaTemporal,$ruta);
 
-  $sentencia2 = $conexion->prepare('INSERT INTO entradastb (tituloEntrada,contenidoEntrada,portadaEntrada,fechEntrada,idCategoria) VALUES (?,?,?,?,?)');
+  $sentencia2 = $conexion->prepare('INSERT INTO entradastb (tituloEntrada,contenidoEntrada,portadaEntrada,fechaEntrada,idCategoria) VALUES (?,?,?,?,?)');
   $resultado2 = $sentencia2->execute([$titulo,$contenido,$nombreImagen,$fecha,$categoria]);
 
   if ($resultado2) {
@@ -32,13 +35,12 @@ if (isset($_POST['enviar'])) {
         <input type="text" name="tituloEntrada" id="tituloEntrada" placeholder="Título de la entrada" maxlength="150" required class="w-full p-3 rounded bg-neutral-800 focus:outline-none focus:ring-2 focus:ring-amber-500" />
       </div>
 
-      <input type="image" src="img/logo.png" alt="" id="preview">
       <div>
         <label for="contenidoEntrada" class="block text-sm font-semibold m-1">Contenido</label>
         <textarea name="contenidoEntrada" id="contenidoEntrada" rows="6" placeholder="Escribe el contenido" required class="w-full p-3 rounded bg-neutral-800 focus:outline-none focus:ring-2 focus:ring-amber-500"></textarea>
       </div>
 
-      <div class="flex flex-col md:flex-row gap-4">
+      <div class="flex flex-col gap-4">
         <div class="w-full flex items-end text-center">
           <label for="portada" class="w-full px-6 py-3 text-black font-semibold rounded bg-amber-500 hover:bg-amber-600 transition">Agregar portada</label>
           <input type="file" name="portadaEntrada" id="portada" required class="hidden" />

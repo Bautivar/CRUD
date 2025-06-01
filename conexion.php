@@ -1,4 +1,6 @@
 <?php
+require_once('functions.php');
+verificarSesion();
 $server = 'localhost';
 $database = 'crudodb';
 $dsn = "mysql:host=$server;dbname=$database;charset=utf8mb4";
