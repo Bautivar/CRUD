@@ -6,23 +6,7 @@ $sentencia1 = $conexion->query('SELECT * FROM categoriastb ORDER BY idCategoria 
 $categorias = $sentencia1->fetchAll(PDO::FETCH_ASSOC);
 
 if (isset($_POST['enviar'])) {
-  $titulo = $_POST['tituloEntrada'];
-  $contenido = $_POST['contenidoEntrada'];
-  $fecha = date('Y/m/d');
-  $categoria = $_POST['idCategoria'];
-
-  $imagen = $_FILES['portadaEntrada'];
-  $nombreImagen = $imagen['name'];
-  $ruta = "img/portadas/".$nombreImagen;
-  $rutaTemporal = $imagen['tmp_name'];
-  move_uploaded_file($rutaTemporal,$ruta);
-
-  $sentencia2 = $conexion->prepare('INSERT INTO entradastb (tituloEntrada,contenidoEntrada,portadaEntrada,fechaEntrada,idCategoria) VALUES (?,?,?,?,?)');
-  $resultado2 = $sentencia2->execute([$titulo,$contenido,$nombreImagen,$fecha,$categoria]);
-
-  if ($resultado2) {
-    header("Location:admin.php");
-  }
+  agregarEntrada($conexion,$_POST['tituloEntrada'],$_POST['contenidoEntrada'],date('Y/m/d'),$_POST['idCategoria'],$_FILES['portadaEntrada']);
 }
 ?>
 <main id="main" class="bg-neutral-950 min-h-screen py-10 px-4 text-white">

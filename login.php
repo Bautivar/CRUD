@@ -4,7 +4,7 @@
 
     if (isset($_POST['enviar'])) {
         $recuerdame = isset($_POST['recuerdame']);
-        $mensaje = login($_POST['usuario'],$_POST['password'],$recuerdame);
+        $mensaje = login($conexion,$_POST['usuario'],$_POST['password'],$recuerdame);
     }
 ?>
 <?php include_once("header.php") ?>

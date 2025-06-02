@@ -1,4 +1,7 @@
 <?php
+require_once('functions.php');
+verificarSesion();
+
 if ($_GET['idEntrada']) {
     $idEntrada = $_GET['idEntrada'];
     require_once('conexion.php');

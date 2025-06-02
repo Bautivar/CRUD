@@ -1,13 +1,17 @@
 <?php 
-require_once('conexion.php');
-function login($user,$pass,$rec){
-    if ($user === "admin" && $pass === "admin") {
+require_once('./conexion.php');
+function login($conexion,$user,$pass,$rec){
+    $sentencia = $conexion->prepare("SELECT * FROM usuariostb WHERE nombreUsuario = ? AND passwordUsuario = ?");
+    
+    $sentencia->execute([$user,$pass]);
+    
+    $usuario = $sentencia->fetch(PDO::FETCH_ASSOC); 
+    
+    if ($usuario) {
         session_start();
-        $sesion_usuario = session_id();
-        $_SESSION['id'] = $sesion_usuario;
-
+        $_SESSION['id'] = $usuario['idUsuario'];
         if ($rec == true) {
-            setcookie('id',$sesion_usuario,time()+3600);
+            setcookie('id',$usuario['idUsuario'],time()+3600);
         }
         return header('Location:admin.php');
     }
@@ -21,5 +25,35 @@ function verificarSesion(){
     if (!isset($_SESSION['id'])) {
         header('location:login.php');
     }
+}
+function agregarEntrada($conexion,$titulo,$contenido,$fecha,$categoria,$imagen){
+  $nombreImagen = $imagen['name'];
+  $ruta = "img/portadas/".$nombreImagen;
+  $rutaTemporal = $imagen['tmp_name'];
+  move_uploaded_file($rutaTemporal,$ruta);
+
+  $sentencia2 = $conexion->prepare('INSERT INTO entradastb (tituloEntrada,contenidoEntrada,portadaEntrada,fechaEntrada,idCategoria) VALUES (?,?,?,?,?)');
+  $resultado2 = $sentencia2->execute([$titulo,$contenido,$nombreImagen,$fecha,$categoria]);
+
+  if ($resultado2) {
+    header("Location:admin.php");
+  }
+}
+function modificarEntrada($conexion,$titulo,$contenido,$fecha,$categoria,$idEntrada,$portadaImagen,$imagenAnterior){
+  $nombreImagen = $imagenAnterior;
+
+  if (!empty($portadaImagen['name'])) {
+    $imagen = $portadaImagen;
+    $nombreImagen = $imagen['name'];
+    $ruta = "img/portadas/".$nombreImagen;
+    $rutaTemporal = $imagen['tmp_name'];
+    move_uploaded_file($rutaTemporal,$ruta);
+}
+  $sentencia2 = $conexion->prepare('UPDATE `entradastb` SET `tituloEntrada`= ?,`contenidoEntrada`= ?,`portadaEntrada`=?,`fechaEntrada`= ?,`idCategoria`= ? WHERE idEntrada = ?');
+  $resultado2 = $sentencia2->execute([$titulo,$contenido,$nombreImagen,$fecha,$categoria,$idEntrada]);
+
+  if ($resultado2) {
+    header("Location:admin.php");
+  }
 }
 ?>
